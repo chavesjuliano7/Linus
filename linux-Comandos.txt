@@ -1,0 +1,198 @@
+**Para Criar arquivos no linux**
+Redirecionamento  (>) "nomeDoArquivo".txt
+
+**O comando echo recebe uma frase, não um nome de arquivo
+echo vai imprimir a frase que vem após seu comando
+
+** Execute esse comando redirecionando sua saída para um arquivo, para isso, utilizamos o caractere >
+
+echo "Bem vindo" > bemvindo.txt
+
+**echo escreve no arquivo, criando o arquivo caso não exista. Caso exista, o conteúdo do arquivo será sobrescrito
+**Não queremos sobrescrever, queremos adicionar um texto, concatená-lo com o que já está inserido no arquivo. Para tal usamos >> em vez de apenas um >:
+echo "Faithless" >> musicas-favoritas.txt
+
+** O cat recebe o nome do arquivo como argumento e imprime seu conteúdo.
+cat bemvindo.txt
+
+**A opção -n mostra as linhas além de mostrar o conteúdo de um arquivo.
+cat -n
+
+**A opção -v não mostra as linhas, ela mostra caracteres escondidos (como quebras de linhas, delete etc)
+Cat -v
+
+**Para navegar em Diretórios**
+
+**Informar qual é o seu diretório atual
+pwd
+
+**Saber os arquivos e diretórios dentro diretório
+ls
+
+**Para listar os arquivos e diretórios incluindo arquivos oculto 
+ls -la
+
+**Para aprendermos sobre um determinado comando podemos utilizar o comando 
+man + [comando sobre o qual queremos aprender]
+man ls
+**Sempre que precisar consultar os parâmetros que um comando suporta, você pode pedir ajuda através do help ou --help.
+
+**Para limparmos o terminal.
+clear
+
+**Para desligar o computador, usaríamos o 
+poweroff
+
+**retorna o nome do usuário que está sendo usado.
+whoami
+
+**Comando clear para limpar a tela do terminal. O atalho Ctrl + L tem a mesma função.
+clear
+
+**Para mudarmos de diretório, podemos utilizar o comando cd - Change Directory:
+cd Desktop
+
+**Português (pt_BR), a tradicional pasta "Desktop" foi renomeada para "Área de Trabalho" e, como os iniciados sabem, ela precisa ser acessada pelo terminal com o uso de barras invertidas ("") para designar os espaços, ou seja:
+
+cd Área\ de\ Trabalho/ (barra e espaço)
+
+**Para voltarmos para o diretório anterior usamos o comando cd .. .Existem também o diretório ., que referência o diretório atual.
+cd .. = diretório anterior
+Cd .  = diretório atual
+
+
+**Criar um diretório, para isso utilizamos o comando mkdir seguido do nome do diretório que queremos criar:
+
+mkdir workspace
+
+rmdir para remover um diretório se ele estiver vazio.
+
+**copiar o texto do arquivo para um outro 
+
+cp mensagem.txt bemvindo.txt
+
+cp desse ParaEsse
+
+
+**mover o arquivo "mensagem.txt" para outro com o comando mv:
+Ele move e Renomeia
+O comando cp não suporta o uso de redirecionamentos dessa forma.
+
+mv bemvindo.txt projetos-java/ (aqui estou movendo um arquivo para outro diretoria)
+
+mv oMesmoNome.txt diretório/outroNome.txt (aqui estou movendo um arquivo para outro diretório e mudando o nome dele)
+
+cp -r projetos-java projetos-c# (a forma recursiva faz copiar todos os arquivos da pasta projeto-java para o projetos-c#
+
+**Zipar um arquivo
+
+zip -rq work.zip workspace (work.zip é o nome que demos para o arquivo de compactação.)
+
+
+unzip -l work.zip (o comando após unzip é a letra L minúscula, e não o número 1) dessa forma conseguimos observar quais arquivos e diretórios foram compactados.
+
+
+Compactação Linux
+
+O tar serve para empacotar vários diretórios e arquivos em um único arquivo, facilitando a transferência. Para compactar usaremos o tar combinado com o zip, o primeiro empacota e o segundo compacta.
+
+O modificador -cz indica que o arquivo tar será criado (-c) e será compactado pelo zip(-z) usando o redirecionamento >. Uma observação interessante é que comando tar já é automaticamente recursivo.
+
+
+tar -cz workspace > work.tar.gz (compacta)
+
+tar -xz < work.tar.gz (descompacta)
+
+
+a presença -x de "extract", para extrair os arquivos e a direção do redirecionamento < que agora em vez de indicar saída de dados, indica entrada de dados.
+
+Mas não é muito bom ficarmos o tempo todo trabalhando com redirecionamento, é meio chato. Para isso o comando tar possui o modificador -f para podermos passar o nome do arquivo que queremos criar:
+
+tar -czf work.tar.gz workspace/
+
+Note que inversão no nome do arquivo e diretório a ser compactado, com redirecionamento, o nome do arquivo final vem depois, agora ele está vindo antes. Agora para descompactar fazemos:
+
+tar -xzf work.tar.gz
+
+Uma outra característica que faz o comando tar diferente do zip é que ele não é verborrágico por padrão. Consequentemente não precisamos dar comandos para que as informações de compactação não apareçam. Pelo contrário, para que as informações apareçam, usamos o modificador -v (de "verbose"):
+
+tar -vxzf work.tar.gz
+
+O -t lista os arquivos na saída (e não pode ser usado com o -x)
+
+tar -xzt work.tar.gz
+
+
+**Compactar no formato .gz, que é o formato gerado pelo compactador gzip.
+
+**Um outro formato de compactação que podemos utilizar junto com o tar é o formato .bzip2. Esse formato é mais eficiente na compactação, conseguindo criar arquivos menores. Porém o tempo que o .bzip2 leva para criar o arquivo compactado é maior do que o tempo do gzip.
+
+Para criar um arquivo .tar compactado com o bzip2, substituímos o -z (de gzip) por um -j. O formato que utilizamos é o .tar.bz2.
+
+tar -cjf work.tar.bz2 workspace/
+
+**Repare que a data da última atualização dele é de 11 de Junho às 15:42. Se quisermos apenas que essa data modifique-se para a data e hora atual, isto é, apenas encostar nesse arquivo sem modificá-lo, usamos o comando touch:
+touch bemvindo.txt
+
+**Vimos que podemos mostrar o dia com %d e o ano com %Y. Para mostrar o nome completo do mês, utilizamos %B. O nome do mês pode estar em um idioma diferente, dependendo da sua configuração de local
+
+$ date "+%d/%m/%Y"
+
+**As datas tem diversões parâmetros que são passados via strings para o date, por passar por uma strings, eu posso utilizar palavras entre ela para montar uma frase de data, por exemplo, como imprimir "A data de hoje é 19 de janeiro de 2016"
+
+date "+ a data de hoje é %d de %B de %Y"
+
+**(O sinal de (+), sinaliza a entrada de dados para o comando date)
+
+
+**Ler Arquivos
+
+cat google.txt
+
+**Porém é muito texto. Se quisermos ler apenas o começo do arquivo, usamos o comando head. Ele retorna apenas as dez primeiras linhas do arquivo:
+
+head google.txt
+
+**Para especificarmos a quantidade de linhas que queremos retornar, podemos usar a opção -n informando o número de linha queremos:
+head -n 3 google.txt
+
+**O tail por padrão retorna as dez últimas linhas, assim como o head, para alterar esse limite, podemos usar o -n assim como fizemos no comando anterior:
+tail -n 3 google.txt
+
+**O comando less, que nos permite abrir e navegar pelo texto do arquivo no Terminal utilizando as setas para cima e para baixo do teclado:
+
+less google.txt
+E podemos fechar o arquivo utilizando a tecla q do teclado.
+
+Edição no VI
+
+ESC: voltar ao modo navegação
+Setas: para navegação
+i: inclui (na posição atual)
+a: adiciona (na posição posterior)
+Shift+A: adiciona (fim da linha)
+x: remove caracteres (n* x remove *n caracteres)
+dd: remove uma linha (n* dd remove *n linhas)
+:wq salva e fecha o vi
+:q! sair sem salvar
+enter: quebrar a linha.
+
+
+Para a última linha do texto por exemplo, basta apertarmos Shift + g
+
+Se quisermos ir para a linha 5, fazemos 5 e depois Shift + g, para a primeira linha a combinação também é válida: 1 e depois Shift + g, sempre com Shift para que o g seja maiúsculo.
+Para ir até o início do arquivo, podemos utilizar também o comando gg
+Também pode digitar o numero da linha e digitar gg algo assim 30gg = ele vai para a linha 30
+
+Se quisermos ir para o final da linha atual usamos a tecla $
+
+Para buscarmos palavras no texto usando o VI, digitamos "/" + o texto que procuramos, algo como:
+
+/California
+
+Se digitarmos isso, o cursor vai para a primeira ocorrência da palavra California. Se apertarmos a tecla n, ele irá para a próxima ocorrência e com Shift + n, podemos voltar para a anterior.
+
+Para copiarmos uma linha do texto apertamos a tecla y duas vezes e para colar o que foi copiado, basta usar a tecla p.
+
+Se quisermos copiar a linha atual e mais as duas linhas abaixo podemos fazer 3 e yy - três linhas foram copiadas. O mesmo serve para o comando de colar: 3 e p cola três vezes o conteúdo copiado anteriormente.
+
